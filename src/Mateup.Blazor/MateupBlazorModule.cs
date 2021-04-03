@@ -18,6 +18,7 @@ using Volo.Abp.Identity.Blazor;
 using Volo.Abp.AutoMapper;
 using Volo.Abp.TenantManagement.Blazor;
 using Mateup.Blazor.Menus;
+using MatBlazor;
 
 namespace Mateup.Blazor
 {
@@ -42,6 +43,7 @@ namespace Mateup.Blazor
             ConfigureUI(builder);
             ConfigureMenu(context);
             ConfigureAutoMapper(context);
+            builder.Services.AddMatBlazor();
         }
 
         private void ConfigureRouter(ServiceConfigurationContext context)

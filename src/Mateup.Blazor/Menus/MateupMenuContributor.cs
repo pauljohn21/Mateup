@@ -43,7 +43,7 @@ namespace Mateup.Blazor.Menus
                     icon: "fas fa-home"
                 )
             );
-
+            AddMenu(context);
             return Task.CompletedTask;
         }
 
@@ -53,7 +53,7 @@ namespace Mateup.Blazor.Menus
             var currentUser = context.ServiceProvider.GetRequiredService<ICurrentUser>();
 
             var identityServerUrl = _configuration["AuthServer:Authority"] ?? "";
-
+            AddMenu(context);
             if (currentUser.IsAuthenticated)
             {
                 context.Menu.AddItem(new ApplicationMenuItem(
@@ -66,6 +66,29 @@ namespace Mateup.Blazor.Menus
             }
 
             return Task.CompletedTask;
+        }
+
+        private void AddMenu(MenuConfigurationContext context)
+        {
+            var accountStringLocalizer = context.GetLocalizer<AccountResource>();
+            var currentUser = context.ServiceProvider.GetRequiredService<ICurrentUser>();
+
+            var identityServerUrl = _configuration["AuthServer:Authority"] ?? "";
+
+            var l = context.GetLocalizer<MateupResource>();
+
+            context.Menu.AddItem(
+               new ApplicationMenuItem(name: "Mateup.Clients",displayName: l["MateUp:Clients"], url: "/clients"));
+            context.Menu.AddItem(
+             new ApplicationMenuItem(name: "Mateup.IdentityResources", displayName: l["MateUp:IdentityResources"], url: "/identity-resources") );
+            context.Menu.AddItem(
+       new ApplicationMenuItem(name: "Mateup.ApiResources", displayName: l["MateUp:ApiResources"], url: "/api-resources"));
+            context.Menu.AddItem(
+     new ApplicationMenuItem(name: "Mateup.PersistedGrants", displayName: l["MateUp:PersistedGrants"], url: "/persisted-grants"));
+            context.Menu.AddItem(
+ new ApplicationMenuItem(name: "Mateup.Users", displayName: l["MateUp:Users"], url: "/users"));
+            context.Menu.AddItem(
+new ApplicationMenuItem(name: "Mateup.Roles", displayName: l["MateUp:Roles"], url: "/roles"));
         }
     }
 }
